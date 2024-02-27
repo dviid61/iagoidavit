@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
-class App(tk.Tk):
+class App(tk.Tk):    
+    
+    WEBHOOK_URL = ""
+    
     def __init__(self):
         super().__init__()
         
@@ -19,13 +22,41 @@ class App(tk.Tk):
         
         self.mainloop()
 
+    def setWebhookWindow():
+        
+        def setWebhookBtn():
+            App.WEBHOOK_URL = webhook.get()
+            print(App.WEBHOOK_URL)
+            setWebhook.destroy()
+            
+        setWebhook = tk.Toplevel()
+        setWebhook.title("Webhook")
+        setWebhook.resizable(0, 0)
+        setWebhook.geometry("300x60")
+        setWebhook.iconbitmap("discord.ico")
+        
+        webhook = tk.StringVar()
+        
+        setWebhook.grid_columnconfigure((0), uniform = "a", weight = 1)
+        setWebhook.grid_rowconfigure((0,1), uniform = "a", weight = 1)        
+        
+        entry = ttk.Entry(setWebhook, width = 45, textvariable = webhook)
+        entry.grid(row = 0, column = 0)
+        
+        btn = ttk.Button(setWebhook, text = "Set", command = setWebhookBtn)
+        btn.grid(row = 1, column = 0)
+        
+        setWebhook.mainloop()
 
 class Menu(tk.Menu):
     def __init__(self, master):
         super().__init__(master)
         
-        webhookMenu = tk.Menu(self)
+        webhookMenu = tk.Menu(self, tearoff = 0)
+        webhookMenu.add_command(label = "Set", command = App.setWebhookWindow)
+        
         self.add_cascade(label = "Webhook", menu = webhookMenu )
+
         
 
 class Frame(tk.Frame):
