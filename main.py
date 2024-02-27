@@ -7,4 +7,4 @@ class App(tk.Tk):
         
         self.mainloop()
 
-App()s
+App()
